@@ -30,10 +30,13 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => this.setState({
-      books:books
+      books: books,
+      currentlyReading: books.filter(book => book.shelf === 'currentlyReading'),
+      wantToRead: books.filter(book => book.shelf === 'wantToRead'),
+      read: books.filter(book => book.shelf === 'read')
     }))
-  
   }
+
   onAddClick() {
     this.setState({
       showSearchPage: true
@@ -41,9 +44,7 @@ class BooksApp extends React.Component {
   }
 
   render() {
-    // console.log('================APP.js====================');
-    // console.log(this.state.books);
-    // console.log('====================================');
+
     return (
       <div className="app">
         {this.state.showSearchPage ? (
@@ -55,9 +56,9 @@ class BooksApp extends React.Component {
               </div>
               <div className="list-books-content">
                 <div>
-                  <CurrentlyReading books={this.state.books} />
-                  <WantToRead books={this.state.books} />
-                  <Read books={this.state.books} />
+                  <CurrentlyReading books={this.state.currentlyReading} />
+                  <WantToRead books={this.state.wantToRead} />
+                  <Read books={this.state.read} />
                 </div>
               </div>
               <div className="open-search">

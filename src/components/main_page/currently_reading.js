@@ -1,9 +1,7 @@
 import React from 'react';
 
 const CurrentlyReading = (props) => {
-  console.log('=============currently reading=======================');
-  console.log(props.books);
-  console.log('====================================');
+
   return (
       <div className="bookshelf">
         <h2 className="bookshelf-title">Currently Reading</h2>
