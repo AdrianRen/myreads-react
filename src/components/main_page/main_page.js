@@ -13,9 +13,7 @@ const MainPage = (props) => {
       <div className="list-books-content">
         <div>
           <CurrentlyReading />
-          {/*Want to Read*/}
           <WantToRead />
-          {/*Read*/}
           <Read />
         </div>
       </div>

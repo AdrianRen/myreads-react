@@ -6,6 +6,8 @@ import SearchPage from './components/search_page';
 import MainPage from './components/main_page/main_page';
 
 class BooksApp extends React.Component {
+
+  
   state = {
     /**
      * TODO: Instead of using this state variable to keep track of which page
@@ -17,6 +19,9 @@ class BooksApp extends React.Component {
   }
 
   render() {
+    console.log('====================================');
+    console.log(BooksAPI.getAll().then((data)=> console.log(data)));
+    console.log('====================================');
     return (
       <div className="app">
         {this.state.showSearchPage ? (
