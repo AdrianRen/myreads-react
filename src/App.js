@@ -3,7 +3,9 @@ import * as BooksAPI from './BooksAPI'
 import './App.css'
 
 import SearchPage from './components/search_page';
-import MainPage from './components/main_page/main_page';
+import CurrentlyReading from './components/main_page/currently_reading';
+import WantToRead from './components/main_page/want_read';
+import Read from './components/main_page/read';
 
 class BooksApp extends React.Component {
   constructor(props){
@@ -17,14 +19,25 @@ class BooksApp extends React.Component {
        * pages, as well as provide a good URL they can bookmark and share.
        */
       showSearchPage: false,
-      books:[]
+      books:[],
+      currentlyReading:[],
+      wantToRead:[],
+      read:[]
     }
+
+    this.onAddClick = this.onAddClick.bind(this);
   }
 
   componentDidMount() {
     BooksAPI.getAll().then((books) => this.setState({
       books:books
     }))
+  
+  }
+  onAddClick() {
+    this.setState({
+      showSearchPage: true
+    })
   }
 
   render() {
@@ -36,10 +49,21 @@ class BooksApp extends React.Component {
         {this.state.showSearchPage ? (
           <SearchPage onCloseClick={() => this.setState({ showSearchPage: false })}/>
         ) : (
-            <MainPage 
-              books={this.state.books}
-              onAddClick={() => this.setState({ showSearchPage: true })}
-            />
+              <div className="list-books">
+              <div className="list-books-title">
+                <h1>MyReads</h1>
+              </div>
+              <div className="list-books-content">
+                <div>
+                  <CurrentlyReading books={this.state.books} />
+                  <WantToRead books={this.state.books} />
+                  <Read books={this.state.books} />
+                </div>
+              </div>
+              <div className="open-search">
+                <a onClick={this.onAddClick}>Add a book</a>
+              </div>
+            </div>
         )}
       </div>
     )
