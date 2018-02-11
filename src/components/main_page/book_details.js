@@ -1,6 +1,9 @@
 import React from 'react';
 
 const BookDetails = (props) => {
+  console.log('==============book_details.js======================');
+  console.log(props.book);
+  console.log('====================================');
   return (
     <li>
       <div className="book">
