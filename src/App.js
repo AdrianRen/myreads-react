@@ -24,7 +24,7 @@ class BooksApp extends React.Component {
       wantToRead:[],
       read:[]
     }
-
+    this.updateShelf = this.updateShelf.bind(this);
     this.onAddClick = this.onAddClick.bind(this);
   }
 
@@ -36,15 +36,18 @@ class BooksApp extends React.Component {
       read: books.filter(book => book.shelf === 'read')
     }))
   }
+  
+  updateShelf(book,shelf){
+    BooksAPI.update(book,shelf);
+  }
 
   onAddClick() {
     this.setState({
       showSearchPage: true
     })
   }
-
+  
   render() {
-
     return (
       <div className="app">
         {this.state.showSearchPage ? (
