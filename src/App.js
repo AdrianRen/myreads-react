@@ -11,7 +11,7 @@ class BooksApp extends React.Component {
 
   state = {
     books: [],
-    searchList: []
+    searchBooks: []
   }
 
 
@@ -38,6 +38,30 @@ class BooksApp extends React.Component {
     }
   }
 
+  onBookSearch = (query) => {
+    BooksAPI.search(query).then((books) => {
+      let searchBooks = books.map(book => {
+        let alreadyExists = false;
+        let ancientBook = {};
+        for (let i = 0; i < this.state.books.length; i++) {
+          if (this.state.books[i].id === book.id) {
+            alreadyExists = true;
+            ancientBook = this.state.books[i];
+          }
+        }
+        if (alreadyExists) {
+          return ancientBook;
+        } else {
+          book.shelf = 'none';
+          return book;
+        }
+      });
+      this.setState({ searchBooks });
+    }).catch(() => {
+      this.setState({ searchBooks: [] });
+    });
+  }
+
   render() {
     return (
       <div className="app">
@@ -45,7 +69,7 @@ class BooksApp extends React.Component {
             <ListBooks books={this.state.books} onShelfUpdate={this.onShelfUpdate}/>
           )}/>
           <Route path="/search" render={()=> (
-            <SearchBooks books={this.state.SearchBooks}/>
+          <SearchBooks books={this.state.searchBooks} onShelfUpdate={this.onShelfUpdate} onBookSearch={this.onBookSearch}/>
           )}/>
       </div>
     )
