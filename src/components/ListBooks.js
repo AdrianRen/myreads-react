@@ -11,9 +11,9 @@ const ListBooks = props => {
       </div>
       <div className="list-books-content">
         <div>
-          <BookShelf books={props.books.filter(book => book.shelf === 'currentlyReading')}/>
-          <BookShelf books={props.books.filter(book => book.shelf === 'wantToRead')}/>
-          <BookShelf books={props.books.filter(book => book.shelf === 'read')}/>
+          <BookShelf books={props.books.filter(book => book.shelf === 'currentlyReading')} onShelfUpdate={props.onShelfUpdate} category="Currently Reading"/>
+          <BookShelf books={props.books.filter(book => book.shelf === 'wantToRead')} onShelfUpdate={props.onShelfUpdate} category="Want To Read"/>
+          <BookShelf books={props.books.filter(book => book.shelf === 'read')} onShelfUpdate={props.onShelfUpdate} category="Read"/>
         </div>
       </div>
       <div className="open-search">

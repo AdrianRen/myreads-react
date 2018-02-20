@@ -20,11 +20,29 @@ class BooksApp extends React.Component {
             .then(books => this.setState({books}))
   }
   
+  onShelfUpdate = (book, shelf) => {
+    if (book.shelf === 'none') {
+      BooksAPI.update(book, shelf).then(()=>{
+        book.shelf = shelf;
+        this.setState(preState => ({
+          books: preState.books.concat([book])
+        }))
+      })
+    } else {
+      const index = this.state.books.map(x=>x.id).indexOf(book.id);
+      BooksAPI.update(book, shelf).then(()=>{
+        let books = this.state.books.slice();
+        books[index].shelf = shelf;
+        this.setState({books})
+      })
+    }
+  }
+
   render() {
     return (
       <div className="app">
           <Route exact path="/" render={()=> (
-            <ListBooks books={this.state.books} />
+            <ListBooks books={this.state.books} onShelfUpdate={this.onShelfUpdate}/>
           )}/>
           <Route path="/search" render={()=> (
             <SearchBooks books={this.state.SearchBooks}/>
