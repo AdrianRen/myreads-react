@@ -11,7 +11,7 @@ class BooksApp extends React.Component {
 
   state = {
     books: [],
-    searchBooks: []
+    searchList: []
   }
 
 
@@ -38,27 +38,27 @@ class BooksApp extends React.Component {
     }
   }
 
-  onBookSearch = (query) => {
-    BooksAPI.search(query).then((books) => {
-      let searchBooks = books.map(book => {
-        let alreadyExists = false;
-        let ancientBook = {};
+  onBookSearch = query => {
+    BooksAPI.search(query).then(books => {
+      let searchList = books.map(book => {
+        let existed = false;
+        let organizedBooks = {};
         for (let i = 0; i < this.state.books.length; i++) {
           if (this.state.books[i].id === book.id) {
-            alreadyExists = true;
-            ancientBook = this.state.books[i];
+            existed = true;
+            organizedBooks = this.state.books[i];
           }
         }
-        if (alreadyExists) {
-          return ancientBook;
+        if (existed) {
+          return organizedBooks;
         } else {
           book.shelf = 'none';
           return book;
         }
       });
-      this.setState({ searchBooks });
+      this.setState({ searchList });
     }).catch(() => {
-      this.setState({ searchBooks: [] });
+      this.setState({ searchList: [] });
     });
   }
 
@@ -69,7 +69,7 @@ class BooksApp extends React.Component {
             <ListBooks books={this.state.books} onShelfUpdate={this.onShelfUpdate}/>
           )}/>
           <Route path="/search" render={()=> (
-          <SearchBooks books={this.state.searchBooks} onShelfUpdate={this.onShelfUpdate} onBookSearch={this.onBookSearch}/>
+          <SearchBooks books={this.state.searchList} onShelfUpdate={this.onShelfUpdate} onBookSearch={this.onBookSearch}/>
           )}/>
       </div>
     )
